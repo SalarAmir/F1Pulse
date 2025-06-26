@@ -1,0 +1,111 @@
+POS.,DRIVER,NATIONALITY,TEAM,PTS.,Season
+1,Max VerstappenVER,NED,Red Bull Racing Honda,395.5,2021
+2,Lewis HamiltonHAM,GBR,Mercedes,387.5,2021
+3,Valtteri BottasBOT,FIN,Mercedes,226.0,2021
+4,Sergio PerezPER,MEX,Red Bull Racing Honda,190.0,2021
+5,Carlos SainzSAI,ESP,Ferrari,164.5,2021
+6,Lando NorrisNOR,GBR,McLaren Mercedes,160.0,2021
+7,Charles LeclercLEC,MON,Ferrari,159.0,2021
+8,Daniel RicciardoRIC,AUS,McLaren Mercedes,115.0,2021
+9,Pierre GaslyGAS,FRA,AlphaTauri Honda,110.0,2021
+10,Fernando AlonsoALO,ESP,Alpine Renault,81.0,2021
+11,Esteban OconOCO,FRA,Alpine Renault,74.0,2021
+12,Sebastian VettelVET,GER,Aston Martin Mercedes,43.0,2021
+13,Lance StrollSTR,CAN,Aston Martin Mercedes,34.0,2021
+14,Yuki TsunodaTSU,JPN,AlphaTauri Honda,32.0,2021
+15,George RussellRUS,GBR,Williams Mercedes,16.0,2021
+16,Kimi RäikkönenRAI,FIN,Alfa Romeo Racing Ferrari,10.0,2021
+17,Nicholas LatifiLAT,CAN,Williams Mercedes,7.0,2021
+18,Antonio GiovinazziGIO,ITA,Alfa Romeo Racing Ferrari,3.0,2021
+19,Mick SchumacherMSC,GER,Haas Ferrari,0.0,2021
+20,Robert KubicaKUB,POL,Alfa Romeo Racing Ferrari,0.0,2021
+21,Nikita MazepinMAZ,RAF,Haas Ferrari,0.0,2021
+1,Max VerstappenVER,NED,Red Bull Racing RBPT,454.0,2022
+2,Charles LeclercLEC,MON,Ferrari,308.0,2022
+3,Sergio PerezPER,MEX,Red Bull Racing RBPT,305.0,2022
+4,George RussellRUS,GBR,Mercedes,275.0,2022
+5,Carlos SainzSAI,ESP,Ferrari,246.0,2022
+6,Lewis HamiltonHAM,GBR,Mercedes,240.0,2022
+7,Lando NorrisNOR,GBR,McLaren Mercedes,122.0,2022
+8,Esteban OconOCO,FRA,Alpine Renault,92.0,2022
+9,Fernando AlonsoALO,ESP,Alpine Renault,81.0,2022
+10,Valtteri BottasBOT,FIN,Alfa Romeo Ferrari,49.0,2022
+11,Daniel RicciardoRIC,AUS,McLaren Mercedes,37.0,2022
+12,Sebastian VettelVET,GER,Aston Martin Aramco Mercedes,37.0,2022
+13,Kevin MagnussenMAG,DEN,Haas Ferrari,25.0,2022
+14,Pierre GaslyGAS,FRA,AlphaTauri RBPT,23.0,2022
+15,Lance StrollSTR,CAN,Aston Martin Aramco Mercedes,18.0,2022
+16,Mick SchumacherMSC,GER,Haas Ferrari,12.0,2022
+17,Yuki TsunodaTSU,JPN,AlphaTauri RBPT,12.0,2022
+18,Zhou GuanyuZHO,CHN,Alfa Romeo Ferrari,6.0,2022
+19,Alexander AlbonALB,THA,Williams Mercedes,4.0,2022
+20,Nicholas LatifiLAT,CAN,Williams Mercedes,2.0,2022
+21,Nyck De VriesDEV,NED,Williams Mercedes,2.0,2022
+22,Nico HulkenbergHUL,GER,Aston Martin Aramco Mercedes,0.0,2022
+1,Max VerstappenVER,NED,Red Bull Racing Honda RBPT,575.0,2023
+2,Sergio PerezPER,MEX,Red Bull Racing Honda RBPT,285.0,2023
+3,Lewis HamiltonHAM,GBR,Mercedes,234.0,2023
+4,Fernando AlonsoALO,ESP,Aston Martin Aramco Mercedes,206.0,2023
+5,Charles LeclercLEC,MON,Ferrari,206.0,2023
+6,Lando NorrisNOR,GBR,McLaren Mercedes,205.0,2023
+7,Carlos SainzSAI,ESP,Ferrari,200.0,2023
+8,George RussellRUS,GBR,Mercedes,175.0,2023
+9,Oscar PiastriPIA,AUS,McLaren Mercedes,97.0,2023
+10,Lance StrollSTR,CAN,Aston Martin Aramco Mercedes,74.0,2023
+11,Pierre GaslyGAS,FRA,Alpine Renault,62.0,2023
+12,Esteban OconOCO,FRA,Alpine Renault,58.0,2023
+13,Alexander AlbonALB,THA,Williams Mercedes,27.0,2023
+14,Yuki TsunodaTSU,JPN,AlphaTauri Honda RBPT,17.0,2023
+15,Valtteri BottasBOT,FIN,Alfa Romeo Ferrari,10.0,2023
+16,Nico HulkenbergHUL,GER,Haas Ferrari,9.0,2023
+17,Daniel RicciardoRIC,AUS,AlphaTauri Honda RBPT,6.0,2023
+18,Zhou GuanyuZHO,CHN,Alfa Romeo Ferrari,6.0,2023
+19,Kevin MagnussenMAG,DEN,Haas Ferrari,3.0,2023
+20,Liam LawsonLAW,NZL,AlphaTauri Honda RBPT,2.0,2023
+21,Logan SargeantSAR,USA,Williams Mercedes,1.0,2023
+22,Nyck De VriesDEV,NED,AlphaTauri Honda RBPT,0.0,2023
+1,Max VerstappenVER,NED,Red Bull Racing Honda RBPT,437.0,2024
+2,Lando NorrisNOR,GBR,McLaren Mercedes,374.0,2024
+3,Charles LeclercLEC,MON,Ferrari,356.0,2024
+4,Oscar PiastriPIA,AUS,McLaren Mercedes,292.0,2024
+5,Carlos SainzSAI,ESP,Ferrari,290.0,2024
+6,George RussellRUS,GBR,Mercedes,245.0,2024
+7,Lewis HamiltonHAM,GBR,Mercedes,223.0,2024
+8,Sergio PerezPER,MEX,Red Bull Racing Honda RBPT,152.0,2024
+9,Fernando AlonsoALO,ESP,Aston Martin Aramco Mercedes,70.0,2024
+10,Pierre GaslyGAS,FRA,Alpine Renault,42.0,2024
+11,Nico HulkenbergHUL,GER,Haas Ferrari,41.0,2024
+12,Yuki TsunodaTSU,JPN,RB Honda RBPT,30.0,2024
+13,Lance StrollSTR,CAN,Aston Martin Aramco Mercedes,24.0,2024
+14,Esteban OconOCO,FRA,Alpine Renault,23.0,2024
+15,Kevin MagnussenMAG,DEN,Haas Ferrari,16.0,2024
+16,Alexander AlbonALB,THA,Williams Mercedes,12.0,2024
+17,Daniel RicciardoRIC,AUS,RB Honda RBPT,12.0,2024
+18,Oliver BearmanBEA,GBR,Haas Ferrari,7.0,2024
+19,Franco ColapintoCOL,ARG,Williams Mercedes,5.0,2024
+20,Zhou GuanyuZHO,CHN,Kick Sauber Ferrari,4.0,2024
+21,Liam LawsonLAW,NZL,RB Honda RBPT,4.0,2024
+22,Valtteri BottasBOT,FIN,Kick Sauber Ferrari,0.0,2024
+23,Logan SargeantSAR,USA,Williams Mercedes,0.0,2024
+24,Jack DoohanDOO,AUS,Alpine Renault,0.0,2024
+1,Oscar PiastriPIA,AUS,McLaren,198.0,2025
+2,Lando NorrisNOR,GBR,McLaren,176.0,2025
+3,Max VerstappenVER,NED,Red Bull Racing,155.0,2025
+4,George RussellRUS,GBR,Mercedes,136.0,2025
+5,Charles LeclercLEC,MON,Ferrari,104.0,2025
+6,Lewis HamiltonHAM,GBR,Ferrari,79.0,2025
+7,Kimi AntonelliANT,ITA,Mercedes,63.0,2025
+8,Alexander AlbonALB,THA,Williams,42.0,2025
+9,Esteban OconOCO,FRA,Haas,22.0,2025
+10,Isack HadjarHAD,FRA,Racing Bulls,21.0,2025
+11,Nico HulkenbergHUL,GER,Kick Sauber,20.0,2025
+12,Lance StrollSTR,CAN,Aston Martin,14.0,2025
+13,Carlos SainzSAI,ESP,Williams,13.0,2025
+14,Pierre GaslyGAS,FRA,Alpine,11.0,2025
+15,Yuki TsunodaTSU,JPN,Red Bull Racing,10.0,2025
+16,Fernando AlonsoALO,ESP,Aston Martin,8.0,2025
+17,Oliver BearmanBEA,GBR,Haas,6.0,2025
+18,Liam LawsonLAW,NZL,Racing Bulls,4.0,2025
+19,Gabriel BortoletoBOR,BRA,Kick Sauber,0.0,2025
+20,Franco ColapintoCOL,ARG,Alpine,0.0,2025
+21,Jack DoohanDOO,AUS,Alpine,0.0,2025
