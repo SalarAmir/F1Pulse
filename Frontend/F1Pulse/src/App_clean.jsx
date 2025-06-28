@@ -340,29 +340,6 @@ const races = [
 
 const seasons = [2021, 2022, 2023, 2024, 2025];
 
-// Sample historical results for demonstration (in production, this would come from the backend)
-const sampleHistoricalResults = {
-  "2024_Max Verstappen_Bahrain Grand Prix": { actual_position: 1 },
-  "2024_Lewis Hamilton_British Grand Prix": { actual_position: 3 },
-  "2024_Lando Norris_British Grand Prix": { actual_position: 2 },
-  "2024_Charles Leclerc_Monaco Grand Prix": { actual_position: 1 },
-  "2024_Sergio Perez_Mexican Grand Prix": { actual_position: 4 },
-  "2024_Fernando Alonso_Canadian Grand Prix": { actual_position: 6 },
-  "2024_Oscar Piastri_Australian Grand Prix": { actual_position: 2 },
-  "2024_Carlos Sainz_Italian Grand Prix": { actual_position: 3 },
-  "2024_George Russell_Belgian Grand Prix": { actual_position: 5 },
-  "2023_Max Verstappen_Dutch Grand Prix": { actual_position: 1 },
-  "2023_Lewis Hamilton_British Grand Prix": { actual_position: 3 },
-  "2023_Charles Leclerc_Monaco Grand Prix": { actual_position: 2 },
-  "2023_Lando Norris_Singapore Grand Prix": { actual_position: 4 },
-  "2022_Max Verstappen_Dutch Grand Prix": { actual_position: 1 },
-  "2022_Lewis Hamilton_British Grand Prix": { actual_position: 2 },
-  "2022_Charles Leclerc_Monaco Grand Prix": { actual_position: 4 },
-  "2021_Lewis Hamilton_British Grand Prix": { actual_position: 1 },
-  "2021_Max Verstappen_Dutch Grand Prix": { actual_position: 1 },
-  "2021_Charles Leclerc_Monaco Grand Prix": { actual_position: 2 },
-};
-
 export default function App() {
   const [formData, setFormData] = useState({
     season: "",
@@ -377,7 +354,6 @@ export default function App() {
   const [currentStep, setCurrentStep] = useState(1);
   const [showDriverGrid, setShowDriverGrid] = useState(false);
   const [showRaceGrid, setShowRaceGrid] = useState(false);
-  const [actualResult, setActualResult] = useState(null);
 
   const selectedDriverInfo = formData.driver ? driverTeamMap[formData.driver] : null;
   const selectedRaceInfo = formData.race ? races.find(r => r.name === formData.race) : null;
@@ -389,13 +365,13 @@ export default function App() {
   const handleDriverSelect = (driverName) => {
     setFormData((prev) => ({ ...prev, driver: driverName }));
     setShowDriverGrid(false);
-    setTimeout(() => setCurrentStep(3), 300);
+    setCurrentStep(3);
   };
 
   const handleRaceSelect = (raceName) => {
     setFormData((prev) => ({ ...prev, race: raceName }));
     setShowRaceGrid(false);
-    setTimeout(() => setCurrentStep(4), 300);
+    setCurrentStep(4);
   };
 
   const handleSubmit = async (e) => {
@@ -427,49 +403,8 @@ export default function App() {
       if (!res.ok) throw new Error("Failed to fetch prediction");
       const data = await res.json();
       setPrediction(data);
-      
-      // Fetch actual results for historical seasons (2021-2024)
-      if (formData.season && formData.season < 2025) {
-        try {
-          const actualRes = await fetch(`http://localhost:8000/actual-result`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              season: Number(formData.season),
-              driver_name: formData.driver,
-              race_name: formData.race,
-            }),
-          });
-          
-          if (actualRes.ok) {
-            const actualData = await actualRes.json();
-            setActualResult(actualData);
-          } else {
-            // Fallback to sample data if backend doesn't have actual results endpoint
-            const key = `${formData.season}_${formData.driver}_${formData.race}`;
-            const sampleResult = sampleHistoricalResults[key];
-            if (sampleResult) {
-              setActualResult(sampleResult);
-            }
-          }
-        } catch (actualErr) {
-          console.log("Could not fetch actual results, trying sample data:", actualErr.message);
-          // Fallback to sample data
-          const key = `${formData.season}_${formData.driver}_${formData.race}`;
-          const sampleResult = sampleHistoricalResults[key];
-          if (sampleResult) {
-            setActualResult(sampleResult);
-          }
-        }
-      } else {
-        setActualResult(null);
-      }
     } catch (err) {
-      if (err.message.includes('fetch')) {
-        setError("Unable to connect to prediction service. Please ensure the backend is running on http://localhost:8000");
-      } else {
-        setError(err.message);
-      }
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -537,13 +472,13 @@ export default function App() {
                     type="button"
                     onClick={() => {
                       setFormData(prev => ({ ...prev, season }));
-                      setTimeout(() => setCurrentStep(2), 300);
+                      setCurrentStep(2);
                     }}
                     className={`season-button ${formData.season === season ? 'selected' : ''}`}
                   >
                     <div className="season-year">{season}</div>
                     <div className="season-type">
-                      {season === 2025 ? '🔮 Future' : '📊 Historical + Actual Results'}
+                      {season === 2025 ? '🔮 Future' : '📊 Historical'}
                     </div>
                   </button>
                 ))}
@@ -787,16 +722,10 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
             >
-              <div className="loading-content">
-                <div className="loading-icon">🏎️</div>
-                <h3>Analyzing Race Data</h3>
-                <p>AI is processing your prediction...</p>
-                <div className="loading-progress">
-                  <div className="loading-bar"></div>
-                </div>
-                <p className="loading-steps">Processing driver stats and circuit data</p>
-              </div>
-            </motion.div>
+              <div className="loading-icon">🏎️</div>
+              <h3>Analyzing Race Data</h3>
+              <p>AI is processing your prediction...</p>
+            </div>
           )}
 
           {/* Prediction Results */}
@@ -812,67 +741,15 @@ export default function App() {
                 <p>AI-Powered F1 Race Analysis</p>
               </div>
               
-              {/* Prediction vs Actual Results */}
-              {actualResult && formData.season < 2025 ? (
-                <div className="prediction-comparison">
-                  <div className="prediction-card">
-                    <div className="prediction-header">AI Prediction</div>
-                    <div className="prediction-position">
-                      P{prediction.predicted_position || prediction.predictedPosition}
-                    </div>
-                    <div className="prediction-confidence">
-                      {((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% Confidence
-                    </div>
-                  </div>
-
-                  <div className="actual-result-card">
-                    <div className="actual-result-header">📊 Actual Result ({formData.season})</div>
-                    <div className="actual-result-position">
-                      P{actualResult.actual_position || actualResult.actualPosition || 'DNF'}
-                    </div>
-                    <div className="accuracy-indicator">
-                      {actualResult.actual_position && prediction.predicted_position ? (
-                        Math.abs((actualResult.actual_position || actualResult.actualPosition) - 
-                                 (prediction.predicted_position || prediction.predictedPosition)) <= 2 ? (
-                          <span className="accuracy-good">✅ Accurate Prediction!</span>
-                        ) : Math.abs((actualResult.actual_position || actualResult.actualPosition) - 
-                                   (prediction.predicted_position || prediction.predictedPosition)) <= 5 ? (
-                          <span className="accuracy-fair">🎯 Good Prediction</span>
-                        ) : (
-                          <span className="accuracy-info">📊 Prediction Recorded</span>
-                        )
-                      ) : (
-                        <span className="accuracy-info">Historical Data</span>
-                      )}
-                    </div>
-                  </div>
+              <div className="prediction-card">
+                <div className="prediction-header">Predicted Finishing Position</div>
+                <div className="prediction-position">
+                  P{prediction.predicted_position || prediction.predictedPosition}
                 </div>
-              ) : formData.season < 2025 ? (
-                <>
-                  <div className="prediction-card">
-                    <div className="prediction-header">Predicted Finishing Position</div>
-                    <div className="prediction-position">
-                      P{prediction.predicted_position || prediction.predictedPosition}
-                    </div>
-                    <div className="prediction-confidence">
-                      {((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% Confidence
-                    </div>
-                  </div>
-                  <div className="info-note">
-                    <p>ℹ️ Actual race result not available for this combination. Try Max Verstappen at Bahrain or Dutch GP for comparison data!</p>
-                  </div>
-                </>
-              ) : (
-                <div className="prediction-card">
-                  <div className="prediction-header">Predicted Finishing Position</div>
-                  <div className="prediction-position">
-                    P{prediction.predicted_position || prediction.predictedPosition}
-                  </div>
-                  <div className="prediction-confidence">
-                    {((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% Confidence
-                  </div>
+                <div className="prediction-confidence">
+                  {((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% Confidence
                 </div>
-              )}
+              </div>
 
               <div className="info-grid">
                 <div className="info-card">
@@ -922,7 +799,6 @@ export default function App() {
                   onClick={() => {
                     setFormData({season: "", driver: "", race: "", customExperience: ""});
                     setPrediction(null);
-                    setActualResult(null);
                     setCurrentStep(1);
                     setShowDriverGrid(false);
                     setShowRaceGrid(false);
@@ -933,9 +809,7 @@ export default function App() {
                 </button>
                 <button
                   onClick={() => {
-                    const predictionText = `F1 Pulse Prediction: ${formData.driver} at ${formData.race} ${formData.season} - Predicted Position: P${prediction.predicted_position || prediction.predictedPosition} (${((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% confidence)`;
-                    const actualText = actualResult ? ` | Actual Result: P${actualResult.actual_position || actualResult.actualPosition || 'DNF'}` : '';
-                    navigator.clipboard.writeText(predictionText + actualText);
+                    navigator.clipboard.writeText(`F1 Pulse Prediction: ${formData.driver} at ${formData.race} ${formData.season} - Predicted Position: P${prediction.predicted_position || prediction.predictedPosition} (${((prediction.prediction_confidence || prediction.predictionConfidence || 0) * 100).toFixed(1)}% confidence)`);
                     alert("Prediction copied to clipboard!");
                   }}
                   className="btn btn-outline flex-1"
@@ -958,10 +832,6 @@ export default function App() {
               <p className="welcome-description">
                 Advanced AI-powered F1 position prediction system. 
                 Follow the steps to get your race prediction!
-                <br />
-                <small style={{ color: '#6b7280', fontSize: '0.9rem' }}>
-                  💡 Select historical seasons (2021-2024) to compare predictions with actual race results!
-                </small>
               </p>
               
               <div className="feature-grid">
