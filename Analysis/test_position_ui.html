@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Position Predictor - Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        select, input, button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            display: none;
+        }
+        
+        .prediction {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .historical {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .confidence {
+            background: rgba(33, 150, 243, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .error {
+            background: rgba(244, 67, 54, 0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        
+        .loading {
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏎️ F1 Position Predictor</h1>
+        
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="season">Season:</label>
+                <select id="season" required>
+                    <option value="">Select Season</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="team">Team:</label>
+                <select id="team" required>
+                    <option value="">Select Team</option>
+                    <option value="0">Red Bull Racing</option>
+                    <option value="1">Mercedes</option>
+                    <option value="2">Ferrari</option>
+                    <option value="3">McLaren</option>
+                    <option value="4">Aston Martin</option>
+                    <option value="5">Alpine</option>
+                    <option value="6">Haas</option>
+                    <option value="7">RB</option>
+                    <option value="8">Williams</option>
+                    <option value="9">Kick Sauber</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="driver">Driver Name (optional):</label>
+                <input type="text" id="driver" placeholder="e.g., Max Verstappen">
+            </div>
+            
+            <div class="form-group">
+                <label for="race">Race Name (optional):</label>
+                <input type="text" id="race" placeholder="e.g., Monaco GP">
+            </div>
+            
+            <div class="form-group">
+                <label for="experience">Driver Experience (years):</label>
+                <select id="experience">
+                    <option value="1">1 year (Rookie)</option>
+                    <option value="2">2 years</option>
+                    <option value="3" selected>3 years</option>
+                    <option value="5">5 years</option>
+                    <option value="8">8 years</option>
+                    <option value="10">10 years</option>
+                    <option value="15">15+ years (Veteran)</option>
+                </select>
+            </div>
+            
+            <button type="submit">🔮 Predict Position</button>
+        </form>
+        
+        <div id="result" class="result">
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            // Show loading
+            resultContent.innerHTML = '<div class="loading">🔄 Predicting position...</div>';
+            resultDiv.style.display = 'block';
+            
+            // Gather form data
+            const formData = {
+                season: parseInt(document.getElementById('season').value),
+                team_encoded: parseInt(document.getElementById('team').value),
+                driver_name: document.getElementById('driver').value || null,
+                race_name: document.getElementById('race').value || null,
+                driver_experience: parseInt(document.getElementById('experience').value)
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/predict`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                // Display results
+                let html = `
+                    <div class="prediction">
+                        🏁 Predicted Position: P${result.predicted_position}
+                    </div>
+                    
+                    <div class="confidence">
+                        🎯 Confidence: ${(result.prediction_confidence * 100).toFixed(1)}%
+                    </div>
+                    
+                    <div>
+                        <strong>Details:</strong><br>
+                        🏁 Team: ${result.team_name}<br>
+                        📅 Season: ${result.season}<br>
+                        📊 Historical Data: ${result.is_historical ? 'Available' : 'Not Available'}
+                    </div>
+                `;
+                
+                if (result.historical_result) {
+                    html += `
+                        <div class="historical">
+                            <strong>🏆 Historical Result:</strong><br>
+                            Position: P${result.historical_result.position}<br>
+                            Points: ${result.historical_result.points}<br>
+                            Driver: ${result.historical_result.driver}<br>
+                            Team: ${result.historical_result.team}
+                        </div>
+                    `;
+                }
+                
+                resultContent.innerHTML = html;
+                
+            } catch (error) {
+                resultContent.innerHTML = `
+                    <div class="error">
+                        ❌ Error: ${error.message}<br>
+                        <small>Make sure the API server is running on localhost:8000</small>
+                    </div>
+                `;
+            }
+        });
+        
+        // Test API connection on page load
+        window.addEventListener('load', async function() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (response.ok) {
+                    console.log('✅ API connection successful');
+                } else {
+                    console.log('⚠️ API connection failed');
+                }
+            } catch (error) {
+                console.log('❌ API server not running');
+            }
+        });
+    </script>
+</body>
+</html>
